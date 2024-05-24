@@ -19,13 +19,9 @@ const Header = () => {
             <div className="flex items-center">
                 <ul className="flex items-center p-2 m-4">
                     <li className="px-2">Online Status: {onlineStatus ? "🟢" : "🔴"}</li>
-
-                    {/* <link></link> this helps in routing to diffrent pages without reloading whole page */}
-                    {/* In html output it behave/show as an anchor tag */}
                     <li className="px-2"> <Link to="/">Home</Link> </li>
                     <li className="px-2"> <Link to="/about">About Us</Link> </li>
                     <li className="px-2"> <Link to="/contact">Contact Us</Link> </li>
-                    <li className="px-2"> <Link to="/grocery">Grocery</Link> </li>
                     <li className="px-2"> <Link to="/cart">Cart</Link> </li>
                     <button 
                         className="p-1 rounded-sm text-white bg-blue-500"

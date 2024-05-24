@@ -9,8 +9,6 @@ import UserContext from "../utils/UserContext";
 // ** Body (main container) component **
 const Body = () => {
 
-    // Whenever state variable updates, React triggers a reconciliation cycle ( re-renders the component)
-    // state variable
     const [listOfRestaurants, setListOfRestaurants] = useState([]);
     const [filteredRestaurants, setFilteredRestaurants] = useState([]);
     const [searchText, setSearchText] = useState("");
@@ -18,7 +16,6 @@ const Body = () => {
     // Higherorder component taking a component & returning updated component
     const RestaurantCardTopRated = withTopRatedLabel(RestaurantCard);
 
-    // *** useEffect() Hook ***
     useEffect( ()=> {
         fetchData();
     }, [] );
@@ -88,24 +85,12 @@ const Body = () => {
                     Top rated restaurant
                 </button>
 
-                {/* *** to update context data everywhere(global in whole app) through input data *** */}
-                <input
-                    type="text"
-                    className="mx-2 p-2 border border-solid border-black"
-                    value={loggedInUser}
-                    onChange={(e) => {
-                        setUserName(e.target.value); // update context each time a letter/key press
-                    }}
-                />
-
             </div>
             <div className="flex flex-wrap justify-center">
                 
                 {
                     filteredRestaurants.map((restaurant) => (
                         <Link key={restaurant.info.id} to={"/restaurant/" + restaurant.info.id}>
-
-                            {/* if the restaurant (avgRating >= 4.5), then add a top_rated label to it  */}
 
                             {(restaurant.info.avgRating >= 4.5) 
                                 ? <RestaurantCardTopRated resData={restaurant}/>
