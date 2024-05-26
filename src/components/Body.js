@@ -41,7 +41,7 @@ const Body = () => {
 
     // using conditional rendering (? :)
     return (listOfRestaurants == undefined || listOfRestaurants.length === 0) ? <Shimmer /> : (
-        <div className="body">
+        <div className="mt-[10vh]">
             <div className="filter m-4">
                 {/* search area */}
                 <input
