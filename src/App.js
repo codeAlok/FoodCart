@@ -31,7 +31,7 @@ const AppLayout = () => {
     return (
 
         <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
-            <div className="app">
+            <div className="app font-Roboto">
                 <Header />
 
                 {/* Here <outlet /> will automatically replaced by component inside children of applayout in createBrowserRouter based on path searched */}

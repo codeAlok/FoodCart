@@ -1,13 +1,11 @@
-import { useContext } from "react";
 import { CDN_URL } from "../utils/constants";
-import UserContext from "../utils/UserContext";
+import { MdAccessTime } from "react-icons/md";
+import { FaStar } from "react-icons/fa6";
 
 // ** ResaurantCard component **
 const RestaurantCard = (props) => {
     // object destructuring
     const {resData} = props;
-
-    const {loggedInUser} = useContext(UserContext);
 
     // object destructuring + optional chaining
     const {
@@ -17,21 +15,27 @@ const RestaurantCard = (props) => {
         avgRating,
         costForTwo,
     } = resData?.info;
+
+    console.log(resData);
     
     return (
-        <div className=" m-2 p-4 w-[250px] rounded-lg bg-gray-200 hover:bg-gray-300" >
+        <div className=" m-2 p-3 w-[250px] h-[300px] rounded-lg bg-gray-200 hover:bg-gray-300 overflow-hidden" >
             <img
-                className=" rounded-lg"
-                src= {CDN_URL + resData.info.cloudinaryImageId}  
-                alt="res-logo" 
+                className="h-[70%] w-[100%] rounded-lg shadow-md transform transition-transform duration-300 hover:scale-105 hover:shadow-lg"
+                src= {CDN_URL + cloudinaryImageId}  
+                alt="restaurant-img" 
             />
 
-            <h3 className="font-bold py-2">{name}</h3>
-            <h4>{cuisines.join(", ")}</h4>
-            <h4>{costForTwo}</h4>
-            <h4>{avgRating} stars</h4>
-            <h4>{resData.info.sla.deliveryTime} minutes</h4>
-            <h4>User: {loggedInUser}</h4>
+            <h3 className="font-medium truncate mt-2">{name}</h3>
+            <h4 className="text-xs truncate">{cuisines.join(", ")}</h4>
+            <div className="flex justify-between text-sm font-medium items-center mt-2">
+                <h4 className= {` ${avgRating < 4 ? 'bg-red-500' : 'bg-green-500'} inline rounded text-white p-[3px]`} > 
+                    <FaStar className="inline mb-1 "/> {avgRating}
+                </h4>
+                <h4>{costForTwo}</h4>
+                <h4> <MdAccessTime className=" inline text-green-500 font-bold mb-1"/> {resData.info.sla.deliveryTime} mins</h4>
+            </div>
+            
         </div>
     ); 
 };
@@ -46,8 +50,8 @@ export const withTopRatedLabel = (RestaurantCard) => {
     return (props) => {
         // returns JSX
         return (
-            <div>
-                <label className="absolute bg-orange-400 text-black m-2 p-2 font-semibold">Top Rated</label>
+            <div className="relative" >
+                <h3 className="absolute bg-orange-400 text-black m-2 p-2 font-semibold top-2 left-0 z-10">Top Rated</h3>
                 <RestaurantCard {...props} />
             </div>
         )
