@@ -3,6 +3,7 @@ import {useState, useContext} from "react";
 import { Link } from "react-router-dom"; // A component used instead of anchor tag
 import useOnlineStatus from "../utils/useOnlineStatus";
 import UserContext from "../utils/UserContext";
+import { FaGenderless } from "react-icons/fa";
 
 const Header = () => {
     const [btnName, setBtnName] = useState("login");
@@ -18,7 +19,6 @@ const Header = () => {
             </div>
             <div className="flex items-center">
                 <ul className="flex items-center p-2 m-4">
-                    <li className="px-2">Online Status: {onlineStatus ? "🟢" : "🔴"}</li>
                     <li className="px-2"> <Link to="/">Home</Link> </li>
                     <li className="px-2"> <Link to="/about">About Us</Link> </li>
                     <li className="px-2"> <Link to="/contact">Contact Us</Link> </li>
@@ -31,6 +31,8 @@ const Header = () => {
                     >
                         {btnName}
                     </button>
+
+                    <FaGenderless className={onlineStatus ? "text-green-500" : "text-red-500 "}/>
 
                     <li className="px-2">{loggedInUser}</li>
                 </ul>

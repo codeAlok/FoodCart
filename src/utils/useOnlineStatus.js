@@ -6,14 +6,18 @@ const useOnlineStatus = () => {
     const [onlineStatus, setOnlineStatus] = useState(true); 
 
     useEffect(()=> {
-        // browser eventlistener (online,offline)
-        window.addEventListener("offline", ()=> {
-            setOnlineStatus(false);
-        });
+        const handleOnline = () => setOnlineStatus(true);
+        const handleOffline = () => setOnlineStatus(false);
 
-        window.addEventListener("online", ()=> {
-            setOnlineStatus(true);
-        });
+        // browser eventlistener (online,offline)
+        window.addEventListener("offline", handleOffline);
+        window.addEventListener("online", handleOnline);
+
+        // Cleanup function to remove event listeners after unmount
+        return () => {
+            window.removeEventListener('online', handleOnline);
+            window.removeEventListener('offline', handleOffline);
+        };
 
     }, []);
 

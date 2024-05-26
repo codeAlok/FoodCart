@@ -2,8 +2,6 @@ import { useRouteError } from "react-router-dom";  // Hooks for path related err
 
 const Error = () => {
     const err = useRouteError();    // calling routeError hook
-    console.log(err);               // gives an object
-
     return (
         <div>
             <h2>This is a error page</h2>

@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
-import UserContext from "../utils/UserContext";
+import UserOffline from "./UserOffline";
 
 
 // ** Body (main container) component **
@@ -28,23 +28,19 @@ const Body = () => {
 
         const json = await data.json();
 
-        setListOfRestaurants(json.data.cards[1].card.card.gridElements.infoWithStyle.restaurants);
+        setListOfRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
         // keeping copy of api data for filter / other purposes
-        setFilteredRestaurants(json.data.cards[1].card.card.gridElements.infoWithStyle.restaurants); 
+        setFilteredRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants); 
     };
 
     // *** UI to display if you're offline ***
     const onlineStatus = useOnlineStatus();
     if(onlineStatus === false){
-        return (
-            <h1>look like you are offline, Please check your internet connection</h1>
-        )
+        return <UserOffline />
     }
 
-    const {loggedInUser, setUserName} = useContext(UserContext); 
-
     // using conditional rendering (? :)
-    return listOfRestaurants.length === 0 ? <Shimmer /> : (
+    return (listOfRestaurants == undefined || listOfRestaurants.length === 0) ? <Shimmer /> : (
         <div className="body">
             <div className="filter m-4">
                 {/* search area */}
