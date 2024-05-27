@@ -1,16 +1,43 @@
+
 const Shimmer = () => {
+
+    const multiShimmer = Array.from ({length: 10}).map((e, index)=> {
+        return (
+            <div key={index} className=" m-2 p-3 w-[250px] h-[300px] rounded-lg bg-gray-300 animate-pulse" >
+                <div className="h-[70%] w-[100%] rounded-lg bg-slate-200 animate-pulse"></div>
+                <div className="mt-2 w-full h-4 rounded-lg bg-slate-200 animate-pulse"></div>
+                <div className="mt-2 w-[70%] h-4 rounded-lg bg-slate-200 animate-pulse"></div>
+                <div className="mt-2 w-full h-4 rounded-lg bg-slate-200 animate-pulse"></div>
+            </div>
+        );
+    });
+
     return (
-        <div className="w-full flex flex-wrap">
-            <div className="m-4 bg-slate-400 w-[20%] h-[250px]"></div>
-            <div className="m-4 bg-slate-400 w-[20%] h-[250px]"></div>
-            <div className="m-4 bg-slate-400 w-[20%] h-[250px]"></div>
-            <div className="m-4 bg-slate-400 w-[20%] h-[250px]"></div>
-            <div className="m-4 bg-slate-400 w-[20%] h-[250px]"></div>
-            <div className="m-4 bg-slate-400 w-[20%] h-[250px]"></div>
-            <div className="m-4 bg-slate-400 w-[20%] h-[250px]"></div>
-            <div className="m-4 bg-slate-400 w-[20%] h-[250px]"></div>
+        <div className="w-full flex justify-center items-center flex-wrap mt-[15vh]">
+            {multiShimmer}
         </div>
     );
 };
+
+
+// Shimmer UI for RestaurantMenu page
+export const ResMenuShimmer = ()=> {
+    const multiShimmer = Array.from ({length: 10}).map((e, index)=> {
+        return (
+            <div key={index} className="border-box relative m-4 p-3 w-[90vw] h-[15vh] md:w-[50vw]  rounded-lg bg-gray-300 animate-pulse" >
+                <div className="absolute right-4 top-2 h-[80%] w-[20%] rounded-lg bg-slate-200"></div>
+                <div className="mt-2 w-[60%] h-4 rounded-lg bg-slate-200 animate-pulse"></div>
+                <div className="mt-2 w-[50%] h-4 rounded-lg bg-slate-200 animate-pulse"></div>
+                <div className="mt-2 w-[60%] h-4 rounded-lg bg-slate-200 animate-pulse"></div>
+            </div>
+        );
+    });
+
+    return (
+        <div className="w-full flex justify-center items-center flex-wrap mt-[15vh]">
+            {multiShimmer}
+        </div>
+    )
+}
 
 export default Shimmer;

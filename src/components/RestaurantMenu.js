@@ -1,4 +1,4 @@
-import Shimmer from "./Shimmer";
+import { ResMenuShimmer } from "./Shimmer";
 import { useParams } from "react-router-dom";  // hook to catch path parameter
 import useRestaurantMenu from "../utils/useRestaurantMenu";
 import RestaurantCategory from "./RestaurantCategory";
@@ -14,7 +14,7 @@ const RestaurantMenu = () => {
     const [showIndex, setShowIndex] = useState(0);
 
     // *** till data not fetched show this ***
-    if(resInfo === null) return <Shimmer />;
+    if(resInfo === null) return <ResMenuShimmer />;
 
     // Destructuring resInfo
     const { 
