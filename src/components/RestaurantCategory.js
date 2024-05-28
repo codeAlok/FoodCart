@@ -2,10 +2,12 @@ import { useState } from "react";
 import ItemList from "./ItemList";
 import { MdKeyboardArrowUp } from "react-icons/md";
 
-const RestaurantCategory = ({ data, showItems, setShowIndex }) => {
+const RestaurantCategory = ({ data, showItems, setShowIndex, itemIndex }) => {
 
     const handleClick = () => {        
-        setShowIndex(); // updating state of its parent component indirectly (LIFTING THE STATE UP)
+        const nextIndex = showItems ? null : itemIndex;
+        
+        setShowIndex(nextIndex); // updating state of its parent component indirectly (LIFTING THE STATE UP)
     }
 
     return (
