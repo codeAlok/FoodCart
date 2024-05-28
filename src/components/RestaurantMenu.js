@@ -33,7 +33,7 @@ const RestaurantMenu = () => {
         );
 
     return (
-        <div className="text-center">
+        <div className="text-center mt-[15vh]">
             <h1 className="font-bold my-4 text-2xl">{name}</h1>
             <p className="font-bold text-lg">
                 {cuisines.join(", ")} - {costForTwoMessage} 
@@ -43,10 +43,10 @@ const RestaurantMenu = () => {
 
             { categories.map( (category, index) => (
                 <RestaurantCategory 
-                    key={category.card.card.title} 
+                    key={index} 
                     data={category.card.card}
                     showItems = {index === showIndex ? true : false}
-                    setShowIndex= {() => setShowIndex(index)}
+                    setShowIndex= {()=> setShowIndex(index)}
                 />
             ))}
         </div>
