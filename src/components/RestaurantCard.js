@@ -15,8 +15,6 @@ const RestaurantCard = (props) => {
         avgRating,
         costForTwo,
     } = resData?.info;
-
-    console.log(resData);
     
     return (
         <div className=" m-2 p-3 w-[250px] h-[300px] rounded-lg bg-gray-200 hover:bg-gray-300 overflow-hidden" >

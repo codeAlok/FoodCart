@@ -1,20 +1,15 @@
-import RestaurantCard, {withTopRatedLabel} from "./RestaurantCard";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
-import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import UserOffline from "./UserOffline";
+import RestaurantOnline from "./RestaurantOnline";
 
 
 // ** Body (main container) component **
 const Body = () => {
 
     const [listOfRestaurants, setListOfRestaurants] = useState([]);
-    const [filteredRestaurants, setFilteredRestaurants] = useState([]);
-    const [searchText, setSearchText] = useState("");
-
-    // Higherorder component taking a component & returning updated component
-    const RestaurantCardTopRated = withTopRatedLabel(RestaurantCard);
+    const [resTitle, setResTitle] = useState("");
 
     useEffect( ()=> {
         fetchData();
@@ -28,9 +23,9 @@ const Body = () => {
 
         const json = await data.json();
 
+        // taking data of all restaurants from top-brand and title
         setListOfRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-        // keeping copy of api data for filter / other purposes
-        setFilteredRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants); 
+        setResTitle(json?.data?.cards[2]?.card?.card?.title);
     };
 
     // *** UI to display if you're offline ***
@@ -40,65 +35,15 @@ const Body = () => {
     }
 
     // using conditional rendering (? :)
-    return (listOfRestaurants == undefined || listOfRestaurants.length === 0) ? <Shimmer /> : (
-        <div className="mt-[10vh]">
-            <div className="filter m-4">
-                {/* search area */}
-                <input
-                    type="text"
-                    className=" p-2 border border-solid border-black"
-                    value={searchText}
-                    onChange={(e) => {
-                        setSearchText(e.target.value); // reRender each time a letter/key press in input
-                    }}
-                />
+    return (listOfRestaurants == undefined || listOfRestaurants.length === 0) 
+        ? <Shimmer /> 
+        : (
+            <div className="mt-[10vh]">
 
-                <button
-                    className=" m-2 p-2 bg-green-300 rounded-lg"
-                    onClick={() => {
-                        const filterRestaurant = listOfRestaurants.filter( 
-                            // convert both data first in lowercase
-                            (res) => res.info.name.toLowerCase().includes(searchText.toLowerCase())
-                        );
-
-                        setFilteredRestaurants(filterRestaurant);
-                    }}
-                >
-                    Search
-                </button>
-                
-                {/* filter area */}
-                <button 
-                    className=" p-2 bg-gray-300 rounded-lg"
-                    onClick={ () => {
-                        const filteredList = listOfRestaurants.filter(
-                            (res) => res.info.avgRating > 4
-                        );
-
-                        setListOfRestaurants(filteredList); //updating state variable
-                    }}
-                >
-                    Top rated restaurant
-                </button>
-
+                {/* online restaurant Data show */}
+                <RestaurantOnline resTitle={resTitle} resData={listOfRestaurants}/>
             </div>
-            <div className="flex flex-wrap justify-center">
-                
-                {
-                    filteredRestaurants.map((restaurant) => (
-                        <Link key={restaurant.info.id} to={"/restaurant/" + restaurant.info.id}>
-
-                            {(restaurant.info.avgRating >= 4.5) 
-                                ? <RestaurantCardTopRated resData={restaurant}/>
-                                : <RestaurantCard resData={restaurant} />
-                            }
-                             
-                        </Link>
-                    ))    
-                }
-            </div>
-        </div>
-    );
+        );
 };
 
 export default Body;
