@@ -1,7 +1,17 @@
+import { useDispatch } from "react-redux";
 import { CDN_URL } from "../utils/constants";
 import { FaStar } from "react-icons/fa6";
+import { addItems } from "../utils/cartSlice";
 
-const ItemList = ({ items }) => {
+const ItemList = ({ items, resInfo }) => {
+    console.log("resinfo in itemlist ", resInfo)
+    const dispatch = useDispatch();
+    const resNeededData = resInfo?.cards[2]?.card?.card?.info;
+
+    const handleAddItem = (itemInfo) => {
+        dispatch(addItems({itemInfo, resNeededData}));
+        console.log("itemInfo ", itemInfo, "RESNeededData: ", resNeededData)
+    }
 
     return (
         <>
@@ -22,7 +32,12 @@ const ItemList = ({ items }) => {
                     </div>
 
                     <div className="w-[50%] sm:w-[30%] p-2 relative m-auto">
-                        <button className="px-5 py-2 border-2 bg-white text-green-500 absolute bottom-0 left-1/2 transform -translate-x-1/2 font-semibold rounded-lg ">Add </button>
+                        <button 
+                            className="px-5 py-2 border-2 bg-white text-green-500 absolute bottom-0 left-1/2 transform -translate-x-1/2 font-semibold rounded-lg "
+                            onClick={() => handleAddItem(item.card.info)}
+                        >
+                            Add 
+                        </button>
 
                         <img src={CDN_URL + item.card.info.imageId} className="rounded-lg w-full md:w-[70%] mx-auto object-cover bg-white" />
                     </div>

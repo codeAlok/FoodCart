@@ -2,7 +2,7 @@ import { useState } from "react";
 import ItemList from "./ItemList";
 import { MdKeyboardArrowUp } from "react-icons/md";
 
-const RestaurantCategory = ({ data, showItems, setShowIndex, itemIndex }) => {
+const RestaurantCategory = ({ data, resInfo, showItems, setShowIndex, itemIndex }) => {
 
     const handleClick = () => {        
         const nextIndex = showItems ? null : itemIndex;
@@ -31,7 +31,7 @@ const RestaurantCategory = ({ data, showItems, setShowIndex, itemIndex }) => {
                 </div>
 
                 {/* Accordian Category */}
-                { showItems && <ItemList items={data.itemCards} />}
+                { showItems && <ItemList items={data.itemCards} resInfo={resInfo} />}
             </div>
         </>
     )

@@ -7,6 +7,8 @@ import Contact from "./components/Contact.js";
 import Error from "./components/Error.js";
 import RestaurantMenu from "./components/RestaurantMenu.js";
 import UserContext from "./utils/UserContext.js";
+import { Provider } from "react-redux";
+import store from "./utils/appStore.js";
 
 
 // **** Lazy loading ****
@@ -29,16 +31,17 @@ const AppLayout = () => {
     }, []);
 
     return (
+        <Provider store={store}>
+            <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
+                <div className="app font-Roboto">
+                    <Header />
 
-        <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
-            <div className="app font-Roboto">
-                <Header />
+                    {/* Here <outlet /> will automatically replaced by component inside children of applayout in createBrowserRouter based on path searched */}
+                    <Outlet />
 
-                {/* Here <outlet /> will automatically replaced by component inside children of applayout in createBrowserRouter based on path searched */}
-                <Outlet />
-
-            </div>
-        </UserContext.Provider>
+                </div>
+            </UserContext.Provider>
+        </Provider>
     );
 };
 
@@ -55,8 +58,8 @@ const appRouter = createBrowserRouter([
             {
                 path: "/about",
                 element: <Suspense fallback={<h1>Loading......</h1>}>
-                            <About />
-                        </Suspense>,
+                    <About />
+                </Suspense>,
             },
             {
                 path: "/contact",
