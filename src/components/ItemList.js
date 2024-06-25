@@ -1,26 +1,26 @@
 import { useDispatch, useSelector } from "react-redux";
 import { CDN_URL } from "../utils/constants";
 import { FaStar } from "react-icons/fa6";
-import { addItems } from "../utils/cartSlice";
+import { addItems, decreaseItemCount, increaseItemCount } from "../utils/cartSlice";
 
 const ItemList = ({ items, resInfo }) => {
-    console.log("resinfo in itemlist ", resInfo)
+    // console.log("resinfo in itemlist ", resInfo)
     const dispatch = useDispatch();
     const cartItems = useSelector((store) => store.cart.items);
-    console.log("cartItems", cartItems);
+    // console.log("cartItems", cartItems);
     const resNeededData = resInfo?.cards[2]?.card?.card?.info;
 
     const handleAddItem = (itemInfo) => {
         dispatch(addItems({ itemInfo, resNeededData }));
-        console.log("itemInfo ", itemInfo, "RESNeededData: ", resNeededData)
+        // console.log("itemInfo ", itemInfo, "RESNeededData: ", resNeededData)
     }
 
-    const handleDecrement = (item) => {
-
+    const handleDecrement = (itemId) => {
+        dispatch(decreaseItemCount(itemId))
     }
 
-    const handleIncrement = (item) => {
-
+    const handleIncrement = (itemId) => {
+        dispatch(increaseItemCount(itemId));
     }
 
     return (
@@ -50,7 +50,7 @@ const ItemList = ({ items, resInfo }) => {
                             <div className="flex justify-evenly p-2 border-2 bg-white text-green-500 absolute bottom-0 left-1/2 transform -translate-x-1/2 font-semibold rounded-lg ">
                                 <div
                                     className="mr-3 cursor-pointer"
-                                    onClick={() => handleDecrement(item)}
+                                    onClick={() => handleDecrement(item.card.info.id)}
                                 >
                                     -
                                 </div>
@@ -63,7 +63,7 @@ const ItemList = ({ items, resInfo }) => {
                                 </span>
                                 <div
                                     className="ml-3 cursor-pointer"
-                                    onClick={() => handleIncrement(item)}
+                                    onClick={() => handleIncrement(item.card.info.id)}
                                 >
                                     +
                                 </div>
