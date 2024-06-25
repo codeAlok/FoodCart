@@ -9,14 +9,18 @@ const cartSlice = createSlice({
 
     reducers: {
         addItems: (state, action) => {
-            state.items.push(action.payload.itemInfo);
+            const data = action.payload;
 
             if(state.restaurant === null) {
-                state.restaurant = action.payload.resNeededData;
+                state.restaurant = data.resNeededData;
+                state.items.push({...data.itemInfo, quantity: 1});
             }
-            else if (state.restaurant.resNeededData.id !== action.payload.resNeededData.id) {
-                state.restaurant = action.payload.resNeededData;
-            }   
+            else if (state.restaurant.id !== data.resNeededData.id) {
+                state.restaurant = data.resNeededData;
+                state.items = [{...data.itemInfo, quantity: 1}];
+            }else {
+                state.items.push({...data.itemInfo, quantity: 1});
+            }
         }
     }
 })
