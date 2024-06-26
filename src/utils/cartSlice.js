@@ -51,6 +51,16 @@ const cartSlice = createSlice({
             }
         },
 
+        // to remove any item from list
+        clearItem: (state, action) => {
+            for(let i=0; i<state.items.length; i++){
+                if(state.items[i].card.info.id === action.payload) {
+                    state.items.splice(i, 1);
+                    break;
+                }
+            }
+        },
+
         clearCart: (state) => {
             state.items = [];
             state.restaurant = null;
@@ -58,6 +68,12 @@ const cartSlice = createSlice({
     }
 })
 
-export const { addItems, increaseItemCount, decreaseItemCount, clearCart } = cartSlice.actions;
+export const { 
+    addItems, 
+    increaseItemCount, 
+    decreaseItemCount, 
+    clearCart, 
+    clearItem 
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

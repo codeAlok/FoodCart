@@ -3,14 +3,16 @@ import { useState, useContext } from "react";
 import { Link } from "react-router-dom"; // A component used instead of anchor tag
 import useOnlineStatus from "../utils/useOnlineStatus";
 import UserContext from "../utils/UserContext";
-import { FaGenderless } from "react-icons/fa";
+import { FaGenderless, FaCartPlus } from "react-icons/fa";
 import { RxHamburgerMenu, RxCross1 } from "react-icons/rx";
+import { useSelector } from "react-redux";
 
 const Header = () => {
     const [btnName, setBtnName] = useState("Login");
     const [openMenu, setOpenMenu] = useState(false)
 
     const onlineStatus = useOnlineStatus();
+    const totalItems = useSelector((store) => store.cart.items.length);
 
     const { loggedInUser } = useContext(UserContext);
 
@@ -41,7 +43,15 @@ const Header = () => {
                             <li className="px-2 py-4 text-xl border-b-[1px] border-gray-500"> <Link to="/">Home</Link> </li>
                             <li className="px-2 py-4 text-xl border-b-[1px] border-gray-500"> <Link to="/about">About Us</Link> </li>
                             <li className="px-2 py-4 text-xl border-b-[1px] border-gray-500"> <Link to="/contact">Contact Us</Link> </li>
-                            <li className="px-2 py-4 text-xl border-b-[1px] border-gray-500"> <Link to="/cart">Cart</Link> </li>
+                            <li className="px-2 py-4 text-xl border-b-[1px] border-gray-500 ">
+                                <Link to="/cart" className="relative">
+                                    <FaCartPlus className="inline-block text-xl" />
+                                    <span
+                                        className="absolute -top-3 -right-2 px-1 py-[2px] text-sm bg-orange-500 text-white rounded-full"
+                                    >{totalItems}</span>
+                                </Link>
+
+                            </li>
                             <li className="px-2 py-4 text-xl border-b-[1px] border-gray-500">
                                 <button onClick={() => {
                                     btnName === "Login" ? setBtnName("Logout") : setBtnName("Login");
@@ -65,7 +75,14 @@ const Header = () => {
                         <li className="px-2"> <Link to="/">Home</Link> </li>
                         <li className="px-2"> <Link to="/about">About Us</Link> </li>
                         <li className="px-2"> <Link to="/contact">Contact Us</Link> </li>
-                        <li className="px-2"> <Link to="/cart">Cart</Link> </li>
+                        <li className="px-2">
+                            <Link to="/cart" className="relative">
+                                <FaCartPlus className="inline-block text-xl" />
+                                <span
+                                    className="absolute -top-3 -right-2 px-1 py-[2px] text-xs bg-orange-500 text-white rounded-full"
+                                >{totalItems}</span>
+                            </Link>
+                        </li>
                         <button
                             className="px-2"
                             onClick={() => {
