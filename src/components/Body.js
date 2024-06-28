@@ -3,6 +3,7 @@ import Shimmer from "./Shimmer";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import UserOffline from "./UserOffline";
 import RestaurantOnline from "./RestaurantOnline";
+import Footer from "./Footer";
 
 
 // ** Body (main container) component **
@@ -38,10 +39,11 @@ const Body = () => {
     return (listOfRestaurants == undefined || listOfRestaurants.length === 0) 
         ? <Shimmer /> 
         : (
-            <div className="mt-[10vh]">
+            <div className="mt-[12vh]">
 
                 {/* online restaurant Data show */}
                 <RestaurantOnline resTitle={resTitle} resData={listOfRestaurants}/>
+                <Footer />
             </div>
         );
 };

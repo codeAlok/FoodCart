@@ -2,6 +2,7 @@ import RestaurantCard, { withTopRatedLabel } from "./RestaurantCard";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { RxCross2 } from "react-icons/rx";
+import search_banner from "../images/search_banner.jpg";
 
 const RestaurantOnline = ({ resTitle, resData }) => {
     const listOfRestaurants = resData; // updated with resData(actual data) on each reRender
@@ -92,7 +93,7 @@ const RestaurantOnline = ({ resTitle, resData }) => {
         }
         else {
             setSearchError("");
-            if(activeFilter == null) {
+            if (activeFilter == null) {
                 setFilteredRestaurants(listOfRestaurants);
             }
         }
@@ -104,37 +105,31 @@ const RestaurantOnline = ({ resTitle, resData }) => {
         setFilteredRestaurants(resData);
     }
 
-    
+
     return (
         <div>
-            <div>
-                <h2 className="text-2xl font-bold m-4">{resTitle}</h2>
+            <div
+                style={{ backgroundImage: `url(${search_banner})` }}
+                className="flex items-center justify-center h-[30vh] bg-no-repeat bg-cover bg-center"
+            >
+                <div className="text-center">
+                    <h2 className=" text-white text-xl sm:text-3xl font-bold tracking-wide">{resTitle}</h2>
+                    <input
+                        type="text"
+                        className="w-[70%] font-medium mt-4 p-2 outline-none border-2 border-orange-500 focus:border-4"
+                        placeholder="Search Restaurant here..."
+                        value={searchText}
+                        onChange={(e) => {
+                            setSearchText(e.target.value);
+                        }}
+                    />
+                </div>
             </div>
 
-            <div className="m-4">
-                <input
-                    type="text"
-                    className=" p-2 border border-solid border-black"
-                    placeholder="Search Restaurant here..."
-                    value={searchText}
-                    onChange={(e) => {
-                        setSearchText(e.target.value);
-                    }}
-                />
-
-                <button
-                    className=" text-slate-200 m-1 p-2 border-2 border-green-500 bg-green-500 rounded font-medium hover:bg-orange-400 hover:border-orange-400"
-                    onClick={() => {
-                        searchRestaurant();
-                    }}
-                >
-                    Search
-                </button>
-            </div>
-
+            {/* ***** filter with button section ***** */}
             <div className="m-4 flex flex-wrap">
                 {/* rating greater than 4.5 */}
-                <div className={`border-slate-300 border-[1px] py-2 px-3 rounded-2xl mb-2 hover:bg-orange-400 ${activeFilter == "ratingGreaterThan4"
+                <div className={`border-slate-300 border-[1px] py-2 px-3 rounded-2xl mb-2 mr-2 hover:bg-orange-400 ${activeFilter == "ratingGreaterThan4"
                     ? "bg-orange-400"
                     : "bg-slate-200"}`}
                 >
@@ -150,40 +145,8 @@ const RestaurantOnline = ({ resTitle, resData }) => {
                     }
                 </div>
 
-                {/* price less than 300 */}
-                <div className={`border-slate-300 border-[1px] p-2 px-3 rounded-2xl mb-2 ml-2 hover:bg-orange-400 ${activeFilter == "priceLessThan300"
-                    ? "bg-orange-400"
-                    : "bg-slate-200"}`}
-                >
-                    <button onClick={filterPriceLessThan300}>
-                        Less than Rs. 300
-                    </button>
-
-                    {activeFilter == "priceLessThan300" &&
-                        <button className="pl-2 text-slate-700" onClick={removeFilter}>
-                            <RxCross2 />
-                        </button>
-                    }
-                </div>
-
-                {/* price between 300-600 */}
-                <div className={`border-slate-300 border-[1px] p-2 px-3 rounded-2xl mb-2 ml-2 hover:bg-orange-400 ${activeFilter == "priceBetween300To600"
-                    ? "bg-orange-400"
-                    : "bg-slate-200"}`}
-                >
-                    <button onClick={filterPriceBetween300To600}>
-                        Rs. 300 - Rs. 600
-                    </button>
-
-                    {activeFilter == "priceBetween300To600" &&
-                        <button className="pl-2 text-slate-700" onClick={removeFilter}>
-                            <RxCross2 />
-                        </button>
-                    }
-                </div>
-
                 {/* fast delivery button */}
-                <div className={`border-slate-300 border-[1px] p-2 px-3 rounded-2xl mb-2 ml-2 hover:bg-orange-400 ${activeFilter == "fastDelivery"
+                <div className={`border-slate-300 border-[1px] p-2 px-3 rounded-2xl mb-2 mr-2 hover:bg-orange-400 ${activeFilter == "fastDelivery"
                     ? "bg-orange-400"
                     : "bg-slate-200"}`}
                 >
@@ -199,7 +162,7 @@ const RestaurantOnline = ({ resTitle, resData }) => {
                 </div>
 
                 {/* Pure veg button */}
-                <div className={`border-slate-300 border-[1px] p-2 px-3 rounded-2xl mb-2 ml-2 hover:bg-orange-400 ${activeFilter == "pureVeg"
+                <div className={`border-slate-300 border-[1px] p-2 px-3 rounded-2xl mb-2 mr-2 hover:bg-orange-400 ${activeFilter == "pureVeg"
                     ? "bg-orange-400"
                     : "bg-slate-200"}`}
                 >
@@ -213,6 +176,41 @@ const RestaurantOnline = ({ resTitle, resData }) => {
                         </button>
                     }
                 </div>
+
+                {/* price less than 300 */}
+                <div className={`border-slate-300 border-[1px] p-2 px-3 rounded-2xl mb-2 mr-2 hover:bg-orange-400 ${activeFilter == "priceLessThan300"
+                    ? "bg-orange-400"
+                    : "bg-slate-200"}`}
+                >
+                    <button onClick={filterPriceLessThan300}>
+                        Less than Rs. 300
+                    </button>
+
+                    {activeFilter == "priceLessThan300" &&
+                        <button className="pl-2 text-slate-700" onClick={removeFilter}>
+                            <RxCross2 />
+                        </button>
+                    }
+                </div>
+
+                {/* price between 300-600 */}
+                <div className={`border-slate-300 border-[1px] p-2 px-3 rounded-2xl mb-2 mr-2 hover:bg-orange-400 ${activeFilter == "priceBetween300To600"
+                    ? "bg-orange-400"
+                    : "bg-slate-200"}`}
+                >
+                    <button onClick={filterPriceBetween300To600}>
+                        Rs. 300 - Rs. 600
+                    </button>
+
+                    {activeFilter == "priceBetween300To600" &&
+                        <button className="pl-2 text-slate-700" onClick={removeFilter}>
+                            <RxCross2 />
+                        </button>
+                    }
+                </div>
+
+
+
             </div>
 
             {searchError && <div className="text-center m-4 font-bold text-3xl text-slate-600">{searchError}</div>}

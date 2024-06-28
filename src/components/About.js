@@ -2,6 +2,7 @@ import burgerImg from "../images/burger.png";
 import { FaLinkedin, FaGithubSquare } from "react-icons/fa";
 import { IoBagCheckOutline, IoTimerOutline } from "react-icons/io5";
 import { TbTruckDelivery } from "react-icons/tb";
+import Footer from "./Footer";
 
 const About = () => {
 
@@ -51,6 +52,7 @@ const About = () => {
                 </div>
             </section>
 
+            <Footer />
         </div>
     );
 

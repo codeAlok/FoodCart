@@ -4,6 +4,7 @@ import { clearCart, clearItem, decreaseItemCount, increaseItemCount } from "../u
 import { MdDeleteForever } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import Footer from "./Footer";
 
 const Cart = () => {
   const [itemTotalAmount, setItemTotalAmount] = useState(0);
@@ -145,9 +146,14 @@ const Cart = () => {
           </div>
         </section>
       </div>
+      <Footer />
     </div>
   ) : (
-    <div className="pt-[12vh]">Cart is empty</div>
+    <div className="pt-[12vh]">
+      Cart is empty
+      <Footer />
+    </div>
+    
   )
 }
 
