@@ -1,12 +1,10 @@
-import React, { lazy, Suspense, useState, useEffect } from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Header from "./components/Header"; // /Header or /Header.js (both work fine)
 import Body from "./components/Body.js";
-import Contact from "./components/Contact.js";
 import Error from "./components/Error.js";
 import RestaurantMenu from "./components/RestaurantMenu.js";
-import UserContext from "./utils/UserContext.js";
 import { Provider } from "react-redux";
 import store from "./utils/appStore.js";
 import Cart from "./components/Cart.js";
@@ -19,29 +17,16 @@ const About = lazy(() => import("./components/About.js"))
 
 // ****** Main App Component (starting point) ******
 const AppLayout = () => {
-    const [userName, setUserName] = useState();  // for updating context_UserContext
-
-    // authentication data (just example)
-    useEffect(() => {
-        // Make an Api call and send username and password (dummy data)
-        const data = {
-            name: "Alok kumar",
-        };
-
-        setUserName(data.name);
-    }, []);
 
     return (
         <Provider store={store}>
-            <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
-                <div className="app font-Roboto">
-                    <Header />
+            <div className="app font-Roboto">
+                <Header />
 
-                    {/* Here <outlet /> will automatically replaced by component inside children of applayout in createBrowserRouter based on path searched */}
-                    <Outlet />
+                {/* Here <outlet /> will automatically replaced by component inside children of applayout in createBrowserRouter based on path searched */}
+                <Outlet />
 
-                </div>
-            </UserContext.Provider>
+            </div>
         </Provider>
     );
 };
@@ -61,10 +46,6 @@ const appRouter = createBrowserRouter([
                 element: <Suspense fallback={<h1>Loading......</h1>}>
                     <About />
                 </Suspense>,
-            },
-            {
-                path: "/contact",
-                element: <Contact />,
             },
             {
                 path: "/cart",

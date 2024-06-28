@@ -1,8 +1,7 @@
 import { LOGO_URL } from "../utils/constants";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom"; // A component used instead of anchor tag
 import useOnlineStatus from "../utils/useOnlineStatus";
-import UserContext from "../utils/UserContext";
 import { FaGenderless, FaCartPlus } from "react-icons/fa";
 import { RxHamburgerMenu, RxCross1 } from "react-icons/rx";
 import { useSelector } from "react-redux";
@@ -13,8 +12,6 @@ const Header = () => {
 
     const onlineStatus = useOnlineStatus();
     const totalItems = useSelector((store) => store.cart.items.length);
-
-    const { loggedInUser } = useContext(UserContext);
 
     return (
         <>
@@ -59,10 +56,6 @@ const Header = () => {
                                 >
                                     {btnName}
                                 </button>
-                            </li>
-
-                            <li className="px-2 py-4 text-xl border-b-[1px] border-gray-500">
-                                {loggedInUser}
                                 <FaGenderless className={onlineStatus ? "text-green-500 inline" : "text-red-500 inline "} />
                             </li>
                         </ul>
@@ -74,7 +67,6 @@ const Header = () => {
                     <ul className="flex items-center p-2">
                         <li className="px-2"> <Link to="/">Home</Link> </li>
                         <li className="px-2"> <Link to="/about">About Us</Link> </li>
-                        <li className="px-2"> <Link to="/contact">Contact Us</Link> </li>
                         <li className="px-2">
                             <Link to="/cart" className="relative">
                                 <FaCartPlus className="inline-block text-xl" />
@@ -92,7 +84,6 @@ const Header = () => {
                             {btnName}
                         </button>
 
-                        <li className="px-2">{loggedInUser}</li>
                         <FaGenderless className={onlineStatus ? "text-green-500" : "text-red-500 "} />
                     </ul>
                 </div>
