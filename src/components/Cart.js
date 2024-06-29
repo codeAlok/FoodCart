@@ -5,6 +5,8 @@ import { MdDeleteForever } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Footer from "./Footer";
+import { FaStar } from "react-icons/fa6";
+import { MdAccessTime } from "react-icons/md";
 
 const Cart = () => {
   const [itemTotalAmount, setItemTotalAmount] = useState(0);
@@ -50,110 +52,152 @@ const Cart = () => {
 
   return cartItems.length !== 0 ? (
     <div className="pt-[12vh]">
-      <h1 className="text-3xl text-center">Cart page</h1>
-      <div className="w-1/2 m-auto border-2 border-black">
-        <div className="w-full flex justify-between border-2 border-red-400 ">
-          <div>
-            <h3>{resNeededInfo.name}</h3>
-            <h4>{resNeededInfo.cuisines.join(", ")}</h4>
-            <h4>{resNeededInfo.avgRating}</h4>
-            <h4>{resNeededInfo.sla.slaString}</h4>
+      <h1 className="mt-4 text-4xl text-center font-bold">
+        Your <span className="text-orange-500">Cart</span>
+      </h1>
+      <div className=" w-full md:flex justify-between border-2 my-4">
+        <section className="w-full md:w-[60%] p-4">
+
+          {/* restuarant Information */}
+          <div className="w-full flex justify-between p-2 border-2 border-slate-200 bg-slate-100 shadow-md">
+            <div>
+              <h3 className="text-xl sm:text-3xl font-bold">{resNeededInfo.name}</h3>
+              <h4 className="py-1">{resNeededInfo.cuisines.join(", ")}</h4>
+              <h4 className="pb-1">
+                <MdAccessTime className=" inline text-green-500 font-bolder text-xl mb-1 mr-2" />
+                {resNeededInfo.sla.slaString}
+              </h4>
+              <h4 className={` ${resNeededInfo.avgRating < 4 ? 'bg-red-500' : 'bg-green-500'} inline rounded text-white p-[3px]`} >
+                <FaStar className="inline mb-1 " /> {resNeededInfo.avgRating}
+              </h4>
+
+            </div>
+
+            <img
+              src={CDN_URL + resNeededInfo.cloudinaryImageId}
+              alt="resImage"
+              className="w-[100px] h-[100px] sm:w-[150px] sm:h-[150px] border-2 border-slate-200 shadow-md"
+            />
           </div>
 
-          <img
-            src={CDN_URL + resNeededInfo.cloudinaryImageId}
-            alt="resImage"
-            className="w-[30%]"
-          />
-        </div>
+          {/* **** cartItem items list **** */}
+          <div className="w-full mt-3 border-2 border-slate-200 bg-slate-100 shadow-md">
 
-        {/* **** cartItem items list **** */}
-        <div className="border-2 border-green-300 w-full">
+            {cartItems.map((cartItem) => (
+              <div key={cartItem.card.info.id} className="flex items-center m-2 p-2 border-b-2">
+                <img
+                  src={CDN_URL + cartItem.card.info.imageId}
+                  alt="item-image"
+                  className="w-[60px] h-[60px] sm:w-[100px] sm:h-[100px] shadow-md"
+                />
 
-          {cartItems.map((cartItem) => (
-
-            <div key={cartItem.card.info.id} className="flex m-2 p-2 border-b-2">
-              <img
-                src={CDN_URL + cartItem.card.info.imageId}
-                alt="item-image"
-                className="w-[100px] h-[100px]"
-              />
-
-              <div className="w-full pl-2 ">
-                <div className="flex justify-between">
-                  <h2>{cartItem.card.info.name}</h2>
-                  <MdDeleteForever
-                    className="text-xl cursor-pointer"
-                    onClick={() => dispatch(clearItem(cartItem.card.info.id))}
-                  />
-                </div>
-                <div className="flex justify-between">
-                  <div className="border-red-500 flex justify-evenly p-2 border-2 bg-white text-green-500  font-semibold rounded-lg ">
-                    <div
-                      className="mr-3 cursor-pointer"
-                      onClick={() => dispatch(decreaseItemCount(cartItem.card.info.id))}
-                    >
-                      -
-                    </div>
-                    <span>{cartItem.quantity}</span>
-                    <div
-                      className="ml-3 cursor-pointer"
-                      onClick={() => dispatch(increaseItemCount(cartItem.card.info.id))}
-                    >
-                      +
-                    </div>
+                <div className="w-full pl-2 ">
+                  <div className="flex justify-between pb-2">
+                    <h2 className="">{cartItem.card.info.name}</h2>
+                    <MdDeleteForever
+                      className="ml-2 text-2xl cursor-pointer text-red-500"
+                      onClick={() => dispatch(clearItem(cartItem.card.info.id))}
+                    />
                   </div>
-                  <p>
-                    ₹ {(cartItem.quantity * (cartItem.card.info.price / 100 || cartItem.card.info.defaultPrice / 100)).toFixed(2)}
-                  </p>
+                  <div className="flex justify-between">
+                    <div className="border-slate-300 flex justify-evenly border-2 bg-white text-green-500  font-semibold rounded-md shadow-md">
+                      <div
+                        className="p-2 cursor-pointer hover:bg-slate-300 hover:text-orange-500"
+                        onClick={() => dispatch(decreaseItemCount(cartItem.card.info.id))}
+                      >
+                        -
+                      </div>
+                      <span className="py-2 px-1">{cartItem.quantity}</span>
+                      <div
+                        className="p-2 cursor-pointer hover:bg-slate-300 hover:text-orange-500"
+                        onClick={() => dispatch(increaseItemCount(cartItem.card.info.id))}
+                      >
+                        +
+                      </div>
+                    </div>
+                    <p className="font-bold">
+                      ₹ {(cartItem.quantity * (cartItem.card.info.price / 100 || cartItem.card.info.defaultPrice / 100)).toFixed(2)}
+                    </p>
+                  </div>
                 </div>
               </div>
+            ))}
+
+            <div className="w-full flex justify-between p-4 ">
+              <button
+                className="py-2 px-1 text-sm  sm:px-4 bg-red-500 text-white font-bold hover:bg-red-700"
+                onClick={() => dispatch(clearCart())}
+              >Clear Cart</button>
+
+              <button className="py-2 px-1 text-sm  sm:px-4 bg-green-500 text-white font-bold hover:bg-green-700">
+                <Link to={"/restaurant/" + resNeededInfo.id}>
+                  Add more Items
+                </Link>
+              </button>
             </div>
-          ))}
-        </div>
+          </div>
 
-        <section className="w-full flex justify-between border-2 border-blue-500">
-          <button
-            className="py-2 px-4 bg-red-500 text-white"
-            onClick={() => dispatch(clearCart())}
-          >Clear Cart</button>
-
-          <button className="py-2 px-4 bg-green-500 text-white">
-            <Link to={"/restaurant/" + resNeededInfo.id}>
-              Add more Items
-            </Link>
-          </button>
         </section>
 
-        <section className="w-full border-2 border-pink-600">
-          <p className="text-sm font-bold">Bill Details</p>
+        {/* order summary section */}
+        <section className="w-full p-4 md:w-[40%]">
+          <table className="border-2 border-orange-400 w-full">
+            <caption className="text-center text-2xl font-bold p-4">Order Summary</caption>
+            <thead>
+              <tr className="border-b-2 p-3 border-slate-100">
+                <th className="text-left p-2">Bill Type</th>
+                <th className="text-left p-2 border-l-2 border-slate-100">Price (₹)</th>
+              </tr>
+            </thead>
+            <tbody className="border-2 border-orange-400 w-full">
+              <tr className="border-b-2 p-3 border-slate-100">
+                <td className="p-2">Item Total</td>
+                <td className="p-2 border-l-2 border-slate-100">₹{itemTotalAmount}</td>
+              </tr>
+              <tr className="border-b-2 p-3 border-slate-100">
+                <td className="p-2">Delivery Fee | {resNeededInfo.sla.lastMileTravelString}</td>
+                <td
+                  className="p-2 border-l-2 border-slate-100"
+                >₹{(resNeededInfo.feeDetails.totalFee / 100) || 0}</td>
+              </tr>
+              <tr className="border-b-2 p-3 border-orange-500">
+                <td className="p-2">GST and Restaurant Charges</td>
+                <td className="p-2 border-l-2 border-slate-100">₹{(itemTotalAmount * 0.18).toFixed(2)}</td>
+              </tr>
+              <tr>
+                <td className="p-2 font-bold">To Pay</td>
+                <td className="p-2 font-bold border-l-2 border-orange-500">₹{amountToPay}</td>
+              </tr>
+            </tbody>
+          </table>
 
-          <div className="flex justify-between text-sm">
-            <p>Item Total</p>
-            <p>₹{itemTotalAmount}</p>
-          </div>
-          <div className="flex justify-between text-sm">
-            <p>Delivery Fee | {resNeededInfo.sla.lastMileTravelString}</p>
-            <p>₹ {(resNeededInfo.feeDetails.totalFee / 100) || 0}</p>
-          </div>
-          <div className="flex justify-between text-sm">
-            <p>GST and Restaurant Charges</p>
-            <p>₹ {(itemTotalAmount * 0.18).toFixed(2)}</p>
-          </div>
-          <div className="flex justify-between text-base  border-t-2 border-[#000] mt-3 pt-1 font-bold">
-            <p>To Pay</p>
-            <p>₹ {amountToPay}</p>
-          </div>
+          <button
+            className="w-full my-2 p-4 bg-orange-500 text-white font-bold cursor-pointer"
+          >Place Order</button>
         </section>
       </div>
       <Footer />
     </div>
   ) : (
     <div className="pt-[12vh]">
-      Cart is empty
+      <div className="my-6 flex flex-col items-center justify-center w-full sm:w-[60vw] m-auto text-center">
+        <img
+          src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/2xempty_cart_yfxml0"
+          className="w-[80vw] sm:w-[30vw]"
+          alt="empty_cart"
+        />
+
+        <p className="my-2 text-xl font-semibold text-slate-700">Your Cart is Empty</p>
+        <p className="text-slate-500 ">You can go to home page to view more restaurants</p>
+        <button className="my-4 px-4 p-2 text-lg bg-orange-500 text-white font-medium hover:bg-orange-400">
+          <Link to="/">
+            SEE RESTAURANTS NEAR YOU
+          </Link>
+        </button>
+      </div>
       <Footer />
     </div>
-    
+
   )
 }
 

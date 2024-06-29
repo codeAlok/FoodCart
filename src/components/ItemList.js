@@ -47,14 +47,14 @@ const ItemList = ({ items, resInfo }) => {
                             (cartItem) => cartItem.card.info.id === item.card.info.id
                         ) ? (
                             // Increase/decrease counter button show, if item present in cart
-                            <div className="flex justify-evenly p-2 border-2 bg-white text-green-500 absolute bottom-0 left-1/2 transform -translate-x-1/2 font-semibold rounded-lg ">
+                            <div className="flex justify-evenly border-2 border-slate-300 bg-white text-green-500 absolute bottom-0 left-1/2 transform -translate-x-1/2 font-semibold rounded-md ">
                                 <div
-                                    className="mr-3 cursor-pointer"
+                                    className="p-2 cursor-pointer hover:bg-slate-300 hover:text-orange-500"
                                     onClick={() => handleDecrement(item.card.info.id)}
                                 >
                                     -
                                 </div>
-                                <span>
+                                <span className="px-1 py-2">
                                     {
                                         cartItems.find(
                                             (cartItem) => cartItem.card.info.id === item.card.info.id
@@ -62,7 +62,7 @@ const ItemList = ({ items, resInfo }) => {
                                     }
                                 </span>
                                 <div
-                                    className="ml-3 cursor-pointer"
+                                    className="p-2 cursor-pointer hover:bg-slate-300 hover:text-orange-500"
                                     onClick={() => handleIncrement(item.card.info.id)}
                                 >
                                     +
@@ -70,7 +70,7 @@ const ItemList = ({ items, resInfo }) => {
                             </div>
                         ) : (
                             <button
-                                className="px-5 py-2 border-2 bg-white text-green-500 absolute bottom-0 left-1/2 transform -translate-x-1/2 font-semibold rounded-lg cursor-pointer"
+                                className="px-5 py-2 border-2 border-slate-300 hover:bg-slate-300 hover:text-orange-500 bg-white text-green-500 absolute bottom-0 left-1/2 transform -translate-x-1/2 font-semibold rounded-md cursor-pointer"
                                 onClick={() => handleAddItem(item)}
                             >
                                 Add
