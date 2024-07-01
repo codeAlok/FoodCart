@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import Footer from "./Footer";
 import { FaStar } from "react-icons/fa6";
 import { MdAccessTime } from "react-icons/md";
+import { toast } from 'react-toastify';
 
 const Cart = () => {
   const [itemTotalAmount, setItemTotalAmount] = useState(0);
@@ -14,9 +15,6 @@ const Cart = () => {
   const cartItems = useSelector((store) => store.cart.items);
   const resNeededInfo = useSelector((store) => store.cart.restaurant);
   const dispatch = useDispatch();
-
-  console.log("cartitems ", cartItems);
-  console.log("resdata ", resNeededInfo);
 
   // to calculate total amount of items only
   useEffect(() => {
@@ -76,7 +74,7 @@ const Cart = () => {
             <img
               src={CDN_URL + resNeededInfo.cloudinaryImageId}
               alt="resImage"
-              className="w-[100px] h-[100px] sm:w-[150px] sm:h-[150px] border-2 border-slate-200 shadow-md"
+              className="w-[100px] h-[100px] sm:w-[150px] sm:h-[150px] object-cover border-2 border-slate-200 shadow-md"
             />
           </div>
 
@@ -88,7 +86,7 @@ const Cart = () => {
                 <img
                   src={CDN_URL + cartItem.card.info.imageId}
                   alt="item-image"
-                  className="w-[60px] h-[60px] sm:w-[100px] sm:h-[100px] shadow-md"
+                  className="w-[60px] h-[60px] sm:w-[100px] sm:h-[100px] object-cover shadow-md"
                 />
 
                 <div className="w-full pl-2 ">
@@ -96,14 +94,22 @@ const Cart = () => {
                     <h2 className="">{cartItem.card.info.name}</h2>
                     <MdDeleteForever
                       className="ml-2 text-2xl cursor-pointer text-red-500"
-                      onClick={() => dispatch(clearItem(cartItem.card.info.id))}
+                      onClick={() => {
+                        dispatch(clearItem(cartItem.card.info.id));
+                        toast.error("1 item removed from the Cart.");
+                      }}
                     />
                   </div>
                   <div className="flex justify-between">
                     <div className="border-slate-300 flex justify-evenly border-2 bg-white text-green-500  font-semibold rounded-md shadow-md">
                       <div
                         className="p-2 cursor-pointer hover:bg-slate-300 hover:text-orange-500"
-                        onClick={() => dispatch(decreaseItemCount(cartItem.card.info.id))}
+                        onClick={() => {
+                          if(cartItem.quantity == 1) {
+                            toast.error("1 item removed from cart");
+                          }
+                          dispatch(decreaseItemCount(cartItem.card.info.id))
+                        }}
                       >
                         -
                       </div>
@@ -126,7 +132,10 @@ const Cart = () => {
             <div className="w-full flex justify-between p-4 ">
               <button
                 className="py-2 px-1 text-sm  sm:px-4 bg-red-500 text-white font-bold hover:bg-red-700"
-                onClick={() => dispatch(clearCart())}
+                onClick={() => {
+                  dispatch(clearCart());
+                  toast.error("All items removed from Cart.")
+                }}
               >Clear Cart</button>
 
               <button className="py-2 px-1 text-sm  sm:px-4 bg-green-500 text-white font-bold hover:bg-green-700">
@@ -171,9 +180,17 @@ const Cart = () => {
             </tbody>
           </table>
 
-          <button
-            className="w-full my-2 p-4 bg-orange-500 text-white font-bold cursor-pointer"
-          >Place Order</button>
+          <Link to="/">
+            <button
+              className="w-full my-2 p-4 bg-orange-500 text-white font-bold cursor-pointer"
+              onClick={() => {
+                dispatch(clearCart());
+                toast.success("Your order is placed. Cart is empty now.", {autoClose: 2000});
+              }}
+            >
+              Place Order
+            </button>
+          </Link>
         </section>
       </div>
       <Footer />

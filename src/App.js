@@ -8,6 +8,8 @@ import RestaurantMenu from "./components/RestaurantMenu.js";
 import { Provider } from "react-redux";
 import store from "./utils/appStore.js";
 import Cart from "./components/Cart.js";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 // **** Lazy loading ****
@@ -26,6 +28,8 @@ const AppLayout = () => {
                 {/* Here <outlet /> will automatically replaced by component inside children of applayout in createBrowserRouter based on path searched */}
                 <Outlet />
 
+                {/* for popup notification */}
+                <ToastContainer stacked autoClose={1000}/>  
             </div>
         </Provider>
     );

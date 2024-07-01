@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { CDN_URL } from "../utils/constants";
 import { FaStar } from "react-icons/fa6";
 import { addItems, decreaseItemCount, increaseItemCount } from "../utils/cartSlice";
+import { toast } from "react-toastify";
 
 const ItemList = ({ items, resInfo }) => {
     // console.log("resinfo in itemlist ", resInfo)
@@ -11,11 +12,18 @@ const ItemList = ({ items, resInfo }) => {
     const resNeededData = resInfo?.cards[2]?.card?.card?.info;
 
     const handleAddItem = (itemInfo) => {
+
         dispatch(addItems({ itemInfo, resNeededData }));
         // console.log("itemInfo ", itemInfo, "RESNeededData: ", resNeededData)
     }
 
     const handleDecrement = (itemId) => {
+        if (cartItems.find(
+            (cartItem) => cartItem.card.info.id === itemId
+        )?.quantity == 1) {
+            toast.error("1 item removed from cart");
+        }
+
         dispatch(decreaseItemCount(itemId))
     }
 
@@ -42,7 +50,7 @@ const ItemList = ({ items, resInfo }) => {
                     </div>
 
                     <div className="w-[50%] sm:w-[30%] p-2 relative m-auto">
-                        
+
                         {cartItems.some(
                             (cartItem) => cartItem.card.info.id === item.card.info.id
                         ) ? (
@@ -50,7 +58,10 @@ const ItemList = ({ items, resInfo }) => {
                             <div className="flex justify-evenly border-2 border-slate-300 bg-white text-green-500 absolute bottom-0 left-1/2 transform -translate-x-1/2 font-semibold rounded-md ">
                                 <div
                                     className="p-2 cursor-pointer hover:bg-slate-300 hover:text-orange-500"
-                                    onClick={() => handleDecrement(item.card.info.id)}
+                                    onClick={() => {
+
+                                        handleDecrement(item.card.info.id)
+                                    }}
                                 >
                                     -
                                 </div>
@@ -71,7 +82,10 @@ const ItemList = ({ items, resInfo }) => {
                         ) : (
                             <button
                                 className="px-5 py-2 border-2 border-slate-300 hover:bg-slate-300 hover:text-orange-500 bg-white text-green-500 absolute bottom-0 left-1/2 transform -translate-x-1/2 font-semibold rounded-md cursor-pointer"
-                                onClick={() => handleAddItem(item)}
+                                onClick={() => {
+                                    toast.success("1 item added to cart.");
+                                    handleAddItem(item)
+                                }}
                             >
                                 Add
                             </button>
