@@ -4,6 +4,7 @@ import useOnlineStatus from "../utils/useOnlineStatus";
 import UserOffline from "./UserOffline";
 import RestaurantOnline from "./RestaurantOnline";
 import Footer from "./Footer";
+import { SWIGGY_MAIN_API } from "../utils/constants";
 
 
 // ** Body (main container) component **
@@ -18,9 +19,7 @@ const Body = () => {
 
     // **** function to fetch Live API Data and Apply to our Project ****
     const fetchData = async () => {
-        const data = await fetch(
-            "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9715987&lng=77.5945627&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-        );
+        const data = await fetch(SWIGGY_MAIN_API);
 
         const json = await data.json();
 
