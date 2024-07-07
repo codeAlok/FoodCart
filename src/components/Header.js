@@ -4,23 +4,40 @@ import { Link } from "react-router-dom"; // A component used instead of anchor t
 import useOnlineStatus from "../utils/useOnlineStatus";
 import { FaGenderless, FaCartPlus } from "react-icons/fa";
 import { RxHamburgerMenu, RxCross1 } from "react-icons/rx";
+import { RiArrowDropDownLine } from "react-icons/ri";
 import { useSelector } from "react-redux";
+import SearchLocation from "./SearchLocation";
 
 const Header = () => {
     const [btnName, setBtnName] = useState("Login");
-    const [openMenu, setOpenMenu] = useState(false)
+    const [openMenu, setOpenMenu] = useState(false);
+    const [openSearch, setOpenSearch] = useState(false);
 
     const onlineStatus = useOnlineStatus();
     const totalItems = useSelector((store) => store.cart.items.length);
+    const { locationName, locationDisplayName } = useSelector((store) => store.location);
 
     return (
         <>
             <div className="w-full flex justify-between items-center font-semibold bg-slate-100 shadow-xl mb-2 h-[10vh] px-2 fixed top-0 z-20">
-                <div className="h-[80%]">
+                <div className="h-[80%] flex items-center ">
                     <Link to="/">
-                        <img className="h-[100%]" src={LOGO_URL} alt="logo" />
+                        <img className="h-[60px]" src={LOGO_URL} alt="logo" />
                     </Link>
+
+                    <div
+                        className="ml-6 p-1 bg-white shadow-md w-[200px] md:w-[20vw] h-[80%] relative cursor-pointer"
+                        onClick={() => setOpenSearch((prev) => !prev)}
+                    >
+                        <p className="text-lg truncate">{locationName}</p>
+                        <p className="text-xs truncate text-gray-500">{locationDisplayName}</p>
+                        <RiArrowDropDownLine className="h-full hover:bg-slate-100  bg-slate-200 text-orange-500 text-xl absolute top-0 right-0" />
+                    </div>
                 </div>
+
+
+
+                {openSearch && <SearchLocation setOpenSearch={setOpenSearch} />}
 
                 {/* *** for small screen *** */}
                 {!openMenu
