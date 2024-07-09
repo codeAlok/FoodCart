@@ -4,7 +4,7 @@ import useOnlineStatus from "../utils/useOnlineStatus";
 import UserOffline from "./UserOffline";
 import RestaurantOnline from "./RestaurantOnline";
 import Footer from "./Footer";
-import { SWIGGY_MAIN_API } from "../utils/constants";
+import { useSelector } from "react-redux";
 
 
 // ** Body (main container) component **
@@ -12,14 +12,18 @@ const Body = () => {
 
     const [listOfRestaurants, setListOfRestaurants] = useState([]);
     const [resTitle, setResTitle] = useState("");
+    const {latitude, longitude} = useSelector((store) => store.location)
 
+    console.log("inside body ", latitude, "  lng ", longitude)
     useEffect( ()=> {
         fetchData();
-    }, [] );
+    }, [latitude] );
 
     // **** function to fetch Live API Data and Apply to our Project ****
     const fetchData = async () => {
-        const data = await fetch(SWIGGY_MAIN_API);
+        const data = await fetch(
+            `https://cors-handlers.vercel.app/api/?url=https%3A%2F%2Fwww.swiggy.com%2Fdapi%2Frestaurants%2Flist%2Fv5%3Flat%3D${latitude}%26lng%3D${longitude}%26is-seo-homepage-enabled%3Dtrue%26page_type%3DDESKTOP_WEB_LISTING`
+        );
 
         const json = await data.json();
 

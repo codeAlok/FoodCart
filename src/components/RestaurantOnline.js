@@ -12,6 +12,13 @@ const RestaurantOnline = ({ resTitle, resData }) => {
     const [searchText, setSearchText] = useState("");
     const [searchError, setSearchError] = useState("");
 
+    console.log("RestaurantOnline rendered");
+
+    // to refresh data each user search diffrent location
+    useEffect(() => {
+        setFilteredRestaurants(listOfRestaurants);
+    }, [listOfRestaurants]);
+
     useEffect(() => {
         searchRestaurant();
         setActiveFilter(null);

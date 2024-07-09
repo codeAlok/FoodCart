@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateLocation } from "../utils/locationSlice";
 import { RxCross2 } from "react-icons/rx";
 import { MdLocationOn } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 
 const SearchLocation = ({ setOpenSearch }) => {
@@ -60,17 +61,18 @@ const SearchLocation = ({ setOpenSearch }) => {
         {
           searchSuggestions.map((item) => {
             return (
-              <div
-                key={item.place_id}
-                className="my-2 border-b-2 border-slate-300 cursor-pointer flex box-border"
-                onClick={() => handleLocationSelect(item)}
-              >
-                <MdLocationOn className="w-[5%] mt-1" />
-                <div className="w-[95%] pl-2">
-                  <li>{item.name}</li>
-                  <li className="text-xs font-normal text-slate-600">{item.display_name}</li>
+              <Link to="/" key={item.place_id}>
+                <div
+                  className="my-2 border-b-2 border-slate-300 cursor-pointer flex box-border"
+                  onClick={() => handleLocationSelect(item)}
+                >
+                  <MdLocationOn className="w-[5%] mt-1" />
+                  <div className="w-[95%] pl-2">
+                    <li>{item.name}</li>
+                    <li className="text-xs font-normal text-slate-600">{item.display_name}</li>
+                  </div>
                 </div>
-              </div>
+              </Link>
             )
           })
         }
