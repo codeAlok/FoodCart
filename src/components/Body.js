@@ -11,13 +11,14 @@ import { useSelector } from "react-redux";
 const Body = () => {
 
     const [listOfRestaurants, setListOfRestaurants] = useState([]);
+    const [locationService, setLocationService] = useState(true);
     const [resTitle, setResTitle] = useState("");
-    const {latitude, longitude} = useSelector((store) => store.location)
+    const { latitude, longitude } = useSelector((store) => store.location)
 
     console.log("inside body ", latitude, "  lng ", longitude)
-    useEffect( ()=> {
+    useEffect(() => {
         fetchData();
-    }, [latitude] );
+    }, [latitude]);
 
     // **** function to fetch Live API Data and Apply to our Project ****
     const fetchData = async () => {
@@ -27,25 +28,55 @@ const Body = () => {
 
         const json = await data.json();
 
-        // taking data of all restaurants from top-brand and title
-        setListOfRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-        setResTitle(json?.data?.cards[2]?.card?.card?.title);
-    };
+        // ** to get the data from topBrands/ online restaurant whatever comes first (to get rid of inconsistent data on swiggy api) **
+        const restData = json?.data?.cards.find((item) => item?.card?.card?.gridElements?.infoWithStyle['@type'] === "type.googleapis.com/swiggy.presentation.food.v2.FavouriteRestaurantInfoWithStyle");
+
+        console.log("restCard: ", restData)
+
+        if (json?.data?.cards[0]?.card?.card?.title === "Location Unserviceable") {
+            console.log("service unserviceable");
+            setLocationService(false);
+        }
+        else {
+            setListOfRestaurants(restData?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+            setResTitle(restData?.card?.card?.header?.title);
+            setLocationService(true);
+        };
+
+    }
 
     // *** UI to display if you're offline ***
     const onlineStatus = useOnlineStatus();
-    if(onlineStatus === false){
+    if (onlineStatus === false) {
         return <UserOffline />
     }
 
+    // *** Display location unserviceable content ***
+    if (locationService === false) {
+        return (
+            <div className="pt-[12vh]">
+                <div className="my-6 flex flex-col items-center justify-center w-full sm:w-[60vw] m-auto text-center">
+                    <img
+                        src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_476,h_476/portal/m/location_unserviceable.png"
+                        className="w-[80vw] sm:w-[30vw]"
+                        alt="location_unserviceable img"
+                    />
+                    <p className="my-2 text-xl font-semibold text-orange-500">Location Unserviceable</p>
+                    <p className="text-slate-500 ">We don’t have any services here till now. Try changing location.</p>
+                </div>
+                <Footer />
+            </div>
+        )
+    }
+
     // using conditional rendering (? :)
-    return (listOfRestaurants == undefined || listOfRestaurants.length === 0) 
-        ? <Shimmer /> 
+    return (listOfRestaurants == undefined || listOfRestaurants.length === 0)
+        ? <Shimmer />
         : (
             <div className="mt-[12vh]">
 
                 {/* online restaurant Data show */}
-                <RestaurantOnline resTitle={resTitle} resData={listOfRestaurants}/>
+                <RestaurantOnline resTitle={resTitle} resData={listOfRestaurants} />
                 <Footer />
             </div>
         );

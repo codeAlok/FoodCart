@@ -26,16 +26,14 @@ const Header = () => {
                     </Link>
 
                     <div
-                        className="ml-6 p-1 bg-white shadow-md w-[200px] md:w-[20vw] h-[80%] relative cursor-pointer"
+                        className="ml-6 p-1 bg-white shadow-md w-[200px] md:w-[20vw] h-[80%] relative cursor-pointer hover:border-b-2 hover:border-orange-500"
                         onClick={() => setOpenSearch((prev) => !prev)}
                     >
-                        <p className="text-lg truncate">{locationName}</p>
+                        <p className="text-lg truncate text-orange-500">{locationName}</p>
                         <p className="text-xs truncate text-gray-500">{locationDisplayName}</p>
                         <RiArrowDropDownLine className="h-full hover:bg-slate-100  bg-slate-200 text-orange-500 text-xl absolute top-0 right-0" />
                     </div>
                 </div>
-
-
 
                 {openSearch && <SearchLocation setOpenSearch={setOpenSearch} />}
 

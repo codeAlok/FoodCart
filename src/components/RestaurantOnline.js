@@ -120,11 +120,11 @@ const RestaurantOnline = ({ resTitle, resData }) => {
                 className="flex items-center justify-center h-[30vh] bg-no-repeat bg-cover bg-center"
             >
                 <div className="text-center">
-                    <h2 className=" text-white text-xl sm:text-3xl font-bold tracking-wide">{resTitle}</h2>
+                    <h2 className=" text-white text-2xl sm:text-3xl font-extrabold tracking-wide">{resTitle}</h2>
                     <input
                         type="text"
-                        className="w-[70%] font-medium mt-4 p-2 outline-none border-2 border-orange-500 focus:border-4"
-                        placeholder="Search Restaurant here..."
+                        className="w-[70%] font-medium mt-4 p-3 outline-none border-2 border-orange-500 focus:border-4"
+                        placeholder="Search Restaurant name here..."
                         value={searchText}
                         onChange={(e) => {
                             setSearchText(e.target.value);
@@ -215,9 +215,6 @@ const RestaurantOnline = ({ resTitle, resData }) => {
                         </button>
                     }
                 </div>
-
-
-
             </div>
 
             {searchError && <div className="text-center m-4 font-bold text-3xl text-slate-600">{searchError}</div>}
