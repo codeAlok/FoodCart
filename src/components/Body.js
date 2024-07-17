@@ -39,7 +39,14 @@ const Body = () => {
         }
         else {
             setListOfRestaurants(restData?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-            setResTitle(restData?.card?.card?.header?.title);
+
+            if(restData?.card?.card?.header?.title){
+                setResTitle(restData?.card?.card?.header?.title);
+            }
+            else{
+                const resTitle = json?.data?.cards.find((item) => item?.card?.card['@type'] === "type.googleapis.com/swiggy.seo.widgets.v1.BasicContent");
+                setResTitle(resTitle?.card?.card?.title);
+            }
             setLocationService(true);
         };
 
