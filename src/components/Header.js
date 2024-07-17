@@ -19,7 +19,7 @@ const Header = () => {
 
     return (
         <>
-            <div className="w-full flex justify-between items-center font-semibold bg-slate-100 shadow-xl mb-2 h-[10vh] px-2 fixed top-0 z-20">
+            <div className="w-full flex justify-between items-center font-semibold bg-slate-100 shadow-lg mb-2 h-[10vh] px-2 fixed top-0 z-30">
                 <div className="h-[80%] flex items-center ">
                     <Link to="/">
                         <img className="h-[60px]" src={LOGO_URL} alt="logo" />
@@ -52,9 +52,9 @@ const Header = () => {
                                 setOpenMenu(false);
                             }} />
 
-                            <li className="px-2 py-4 text-xl border-b-[1px] border-gray-500"> <Link to="/">Home</Link> </li>
-                            <li className="px-2 py-4 text-xl border-b-[1px] border-gray-500"> <Link to="/about">About Us</Link> </li>
-                            <li className="px-2 py-4 text-xl border-b-[1px] border-gray-500 ">
+                            <li className="px-2 py-4 text-xl border-b-[1px] border-gray-500 hover:text-orange-500"> <Link to="/">Home</Link> </li>
+                            <li className="px-2 py-4 text-xl border-b-[1px] border-gray-500 hover:text-orange-500"> <Link to="/about">About Us</Link> </li>
+                            <li className="px-2 py-4 text-xl border-b-[1px] border-gray-500 hover:text-orange-500 ">
                                 <Link to="/cart" className="relative">
                                     <FaCartPlus className="inline-block text-xl" />
                                     <span
@@ -63,7 +63,7 @@ const Header = () => {
                                 </Link>
 
                             </li>
-                            <li className="px-2 py-4 text-xl border-b-[1px] border-gray-500">
+                            <li className="px-2 py-4 text-xl border-b-[1px] border-gray-500 hover:text-orange-500">
                                 <button onClick={() => {
                                     btnName === "Login" ? setBtnName("Logout") : setBtnName("Login");
                                 }}
@@ -79,9 +79,9 @@ const Header = () => {
                 {/* *** for large screen *** */}
                 <div className="hidden md:flex md:items-center">
                     <ul className="flex items-center p-2">
-                        <li className="px-2"> <Link to="/">Home</Link> </li>
-                        <li className="px-2"> <Link to="/about">About Us</Link> </li>
-                        <li className="px-2">
+                        <li className="px-2 hover:text-orange-500"> <Link to="/">Home</Link> </li>
+                        <li className="px-2 hover:text-orange-500"> <Link to="/about">About Us</Link> </li>
+                        <li className="px-2 hover:text-orange-500">
                             <Link to="/cart" className="relative">
                                 <FaCartPlus className="inline-block text-xl" />
                                 <span
@@ -90,7 +90,7 @@ const Header = () => {
                             </Link>
                         </li>
                         <button
-                            className="px-2"
+                            className="px-2 hover:text-orange-500"
                             onClick={() => {
                                 btnName === "login" ? setBtnName("logout") : setBtnName("login");
                             }}

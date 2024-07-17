@@ -35,7 +35,7 @@ const ItemList = ({ items, resInfo }) => {
         <>
             {items.map((item) => (
 
-                <div key={item.card.info.id} className="p-2 m-2 border-gray-200 border-b-2 flex justify-between">
+                <div key={item.card.info.id} className="p-2 m-2 border-gray-200 border-b-2 flex justify-between hover:shadow-lg">
                     <div className="text-left w-[50%] sm:w-[70%]">
                         <p className="text-lg font-medium">{item.card.info.name}</p>
                         <p className="text-base font-medium">₹ {item.card.info.price / 100 || item.card.info.defaultPrice / 100}</p>

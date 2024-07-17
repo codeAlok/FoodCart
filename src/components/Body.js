@@ -80,7 +80,7 @@ const Body = () => {
     return (listOfRestaurants == undefined || listOfRestaurants.length === 0)
         ? <Shimmer />
         : (
-            <div className="mt-[12vh]">
+            <div className="mt-[13vh]">
 
                 {/* online restaurant Data show */}
                 <RestaurantOnline resTitle={resTitle} resData={listOfRestaurants} />

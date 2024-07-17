@@ -117,9 +117,11 @@ const RestaurantOnline = ({ resTitle, resData }) => {
         <div>
             <div
                 style={{ backgroundImage: `url(${search_banner})` }}
-                className="flex items-center justify-center h-[30vh] bg-no-repeat bg-cover bg-center"
+                className="mt-6 flex items-center justify-center h-[30vh] sm:h-[35vh] bg-no-repeat bg-cover bg-center relative"
             >
-                <div className="text-center">
+                <div className="absolute top-0 w-full h-full bg-black opacity-35 z-10"></div>
+
+                <div className="text-center z-20">
                     <h2 className=" text-white text-2xl sm:text-3xl font-extrabold tracking-wide">{resTitle}</h2>
                     <input
                         type="text"

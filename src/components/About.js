@@ -15,7 +15,7 @@ const About = () => {
 
             <section className="block sm:flex items-center justify-between w-full bg-slate-200 p-4 my-4">
                 <div className="w-full sm:w-1/2">
-                    <img src={burgerImg} alt="image" />
+                    <img src={burgerImg} alt="image" className="hover:animate-bounce"/>
                 </div>
                 <div className="w-full sm:w-1/2 pl-2">
                     <h3 className="text-2xl font-bold text-orange-500">Why to Choose us ?</h3>
